@@ -16,7 +16,7 @@ iys = cellfun(@(p) p(2), insidePoints);
 oxs = cellfun(@(p) p(1), outsidePoints);
 oys = cellfun(@(p) p(2), outsidePoints);
  
-limits = [min([xs ys]) max([xs ys])];
+limits = [min([oxs oys]) max([oxs oys])];
 
 r1 = ezplot(@(x,y) f([x;y], 1), limits);
 r2 = ezplot(@(x,y) f([x;y], 2), limits);
