@@ -35,7 +35,7 @@ title(caption, 'FontSize', 14);
 
 hold off
 
-legend('r = 1','r = 2', 'r = 3')
+legend('f(x, 1)', 'f(x, 2)', 'f(x, 3)')
 
 function y = f(x, r)
     mean_ = [1; 1];
