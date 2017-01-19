@@ -9,13 +9,24 @@ xCor = corrcoef(X);
 
 Y = (X - min(X)) ./ (max(X) - min(X));
 
-surf(corrcoef(X))
+colormap copper
 
-figure
-surf(corrcoef(Y))
+subplot(2,2,1)
+imagesc(corrcoef(X))
+title('correlation X')
+colorbar
 
-figure
-surf(cov(X))
+subplot(2,2,2)
+imagesc(corrcoef(Y))
+title('correlation Y')
+colorbar
 
-figure
-surf(cov(Y))
+subplot(2,2,3)
+imagesc(cov(X))
+title('covariance X')
+colorbar
+
+subplot(2,2,4)
+imagesc(cov(Y))
+title('covariance Y')
+colorbar
