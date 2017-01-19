@@ -4,11 +4,10 @@ mean_ = [1; 1];
 cov_ = [0.1 -0.05; -0.05 0.2];
 
 points = arrayfun(@(x) transpose(mvnrnd(mean_, cov_)), 1:1000, 'UniformOutput', false);
-celldisp(points)
 values = cell2mat(cellfun(@(p) f(p, 3), points, 'UniformOutput', false));
 
-insidePoints = points(find(values <= 0))
-outsidePoints = points(find(values > 0))
+insidePoints = points(find(values <= 0));
+outsidePoints = points(find(values > 0));
 
 ixs = cellfun(@(p) p(1), insidePoints);
 iys = cellfun(@(p) p(2), insidePoints);
@@ -29,8 +28,7 @@ set(r3, 'Color', 'cyan');
 scatter(ixs, iys, 40, 'blue');
 scatter(oxs, oys, 40, 'black');
 
-[~, outsidePointCount] = size(outsidePoints)
-
+[~, outsidePointCount] = size(outsidePoints);
 
 caption = sprintf('The number of points outside r = 3 is %i', outsidePointCount);
 title(caption, 'FontSize', 14);
