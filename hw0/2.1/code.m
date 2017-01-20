@@ -30,12 +30,12 @@ scatter(oxs, oys, 40, 'black');
 
 [~, outsidePointCount] = size(outsidePoints);
 
-caption = sprintf('The number of points outside r = 3 is %i', outsidePointCount);
+caption = sprintf('The number of points outside f(x, 3) = 0 is %i', outsidePointCount);
 title(caption, 'FontSize', 14);
 
 hold off
 
-legend('f(x, 1)', 'f(x, 2)', 'f(x, 3)')
+legend('f(x, 1) = 0', 'f(x, 2) = 0', 'f(x, 3) = 0')
 
 function y = f(x, r)
     mean_ = [1; 1];
