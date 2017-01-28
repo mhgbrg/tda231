@@ -1,5 +1,5 @@
 clear;
-figure;
+fig = figure;
 hold on;
 
 data = load('dataset1.mat');
@@ -39,8 +39,10 @@ fraction1 = outside1 / n;
 fraction2 = outside2 / n;
 fraction3 = outside3 / n;
 
-title('dataset1.mat');
+title('dataset1');
 legend(num2str(fraction1), num2str(fraction2), num2str(fraction3))
+
+saveas(fig, 'plot.eps', 'epsc')
 
 % SGE Mean and variance estimator for spherical Gaussian distribution                               
 %
