@@ -14,7 +14,7 @@ set(c1, 'Color', 'red');
 set(c2, 'Color', 'magenta');
 set(c3, 'Color', 'cyan');
 
-scatter(x(:,1), x(:,2));
+scatter(x(:,1), x(:,2),20,'filled');
 
 outside1 = 0;
 outside2 = 0;
