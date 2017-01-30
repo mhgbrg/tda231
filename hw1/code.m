@@ -14,7 +14,7 @@ set(c1, 'Color', 'red');
 set(c2, 'Color', 'magenta');
 set(c3, 'Color', 'cyan');
 
-scatter(x(:,1), x(:,2),20,'filled');
+scatter(x(:,1), x(:,2),5,'filled');
 
 outside1 = 0;
 outside2 = 0;
@@ -42,7 +42,7 @@ fraction3 = outside3 / n;
 title('dataset1');
 legend(num2str(fraction1), num2str(fraction2), num2str(fraction3))
 
-saveas(fig, 'plot.eps', 'epsc')
+saveas(fig, 'problem21.eps', 'epsc')
 
 % SGE Mean and variance estimator for spherical Gaussian distribution                               
 %
