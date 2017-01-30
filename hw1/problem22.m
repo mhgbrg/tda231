@@ -28,13 +28,13 @@ posterior2 = plot(range, invgamln(range, alphaN(X, 10), betaN(X, 1)));
 %
 MAP = @(a,b) b./(a+1);
 
-M_A = MAP(alphaN(X, 1), betaN(X, 1));
-M_B = MAP(alphaN(X, 10), betaN(X, 1));
+M_A = MAP(alphaN(X, 1), betaN(X, 1))
+M_B = MAP(alphaN(X, 10), betaN(X, 1))
 
 %
 % Problem 2.2 c
 %
-bF = invgamln(M_A, alphaN(X, 1), betaN(X, 1)) ./ invgamln(M_B, alphaN(X, 10), betaN(X, 1));
+bF = invgamln(M_A, alphaN(X, 1), betaN(X, 1)) ./ invgamln(M_B, alphaN(X, 10), betaN(X, 1))
 
 legend('Model A prior', 'Model A posterior', 'Model B prior', 'Model B posterior')
 
