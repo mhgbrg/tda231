@@ -1,6 +1,6 @@
-figure
-hold on
-clear
+clear;
+fig = figure;
+hold on;
 
 %
 % Problem 2.2 a
@@ -37,6 +37,8 @@ M_B = MAP(alphaN(X, 10), betaN(X, 1));
 bF = invgamln(M_A, alphaN(X, 1), betaN(X, 1)) ./ invgamln(M_B, alphaN(X, 10), betaN(X, 1));
 
 legend('Model A prior', 'Model A posterior', 'Model B prior', 'Model B posterior')
+
+saveas(fig, 'problem22.eps', 'epsc')
 
 function alpha = alphaN(x, a)
     [n, ~] = size(x);
