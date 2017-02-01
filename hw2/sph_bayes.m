@@ -17,15 +17,3 @@ function [ P1, P2, Ytest ] = sph_bayes(Xtest, X, y)
     end
     
 end
-
-function [mu, sigma] = musig(x)
-%MUSIG Calculates the mean and variance given some data
-
-    [n, ~] = size(x);
-    mu = 1/n * sum(x);
-    s = zeros(n,1);
-    for m=1:n
-        s(m) = transpose(x(m,:)-mu) * (x(m,:)-mu);
-    end
-    sigma = 1/n * sum(s, 2);
-end
