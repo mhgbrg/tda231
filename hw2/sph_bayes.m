@@ -17,5 +17,5 @@ function [ P1, P2, Ytest ] = sph_bayes(Xtest, X, y)
     else
         Ytest = -1;
     end
-    
+
 end
