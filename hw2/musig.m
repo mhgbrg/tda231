@@ -8,5 +8,5 @@ function [mu, var] = musig(x)
     for m=1:n
         var = var + (x(m,:)-mu) * transpose(x(m,:)-mu);
     end
-    var = 1/(n*p) * var;
+    var = 1/(n*p) * var * eye(p);
 end
