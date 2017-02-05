@@ -1,5 +1,5 @@
-function [mu, var] = musig(x)
-%MUSIG Calculates the mean and variance given some data
+function [mu, var] = muvar(x)
+%MUVAR Calculates the mean and variance given some data
     [n, p] = size(x);
     
     mu = 1/n * sum(x);

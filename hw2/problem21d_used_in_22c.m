@@ -1,8 +1,13 @@
 clear;
 
-data = load('dataset2.mat');
-X = data.x;
-y = data.y;
+handwritten = load('digits.mat');
+data = handwritten.data;
+
+fives = transpose(data(:,:,5));
+eights = transpose(data(:,:,5));
+
+X = [ fives; eights ];
+y = [ ones(size(fives, 1), 1); -1*ones(size(eights, 1), 1) ];
 
 folds = 5;
 
@@ -17,8 +22,8 @@ for k=1:folds
     testX = X(K == k,:);
     testy = y(K == k);
 
-    [mu1, ~] = musig(trainX(trainy == 1,:));
-    [mu2, ~] = musig(trainX(trainy == -1,:));
+    [mu1, ~] = muvar(trainX(trainy == 1,:));
+    [mu2, ~] = muvar(trainX(trainy == -1,:));
 
     for i=1:size(testX,1)
         x = testX(i,:);
