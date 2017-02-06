@@ -27,11 +27,8 @@ eights = transpose(data(:,:,8));
 fivesAndEightsX = [ fives; eights ];
 fivesAndEightsY = [ ones(size(fives, 1), 1); -1*ones(size(eights, 1), 1) ];
 
-disp('new_classifier:')
+disp('using gray scale values:')
 disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) new_classifier_vec(XT, xt, yt)));
-
-disp('sph_bayes:')
-disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) sph_bayes_vec(XT, xt, yt)));
 
 % =============Test misclassification rate using variances =============== %
 
@@ -41,8 +38,5 @@ eights = transpose(vars(:,:,8));
 fivesAndEightsX = [ fives; eights ];
 fivesAndEightsY = [ ones(size(fives, 1), 1); -1*ones(size(eights, 1), 1) ];
 
-disp('new_classifier (variance):')
+disp('using row and column variances:')
 disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) new_classifier_vec(XT, xt, yt)));
-
-disp('sph_bayes: (variance)')
-disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) sph_bayes_vec(XT, xt, yt)));
