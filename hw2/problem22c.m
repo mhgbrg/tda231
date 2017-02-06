@@ -28,10 +28,10 @@ fivesAndEightsX = [ fives; eights ];
 fivesAndEightsY = [ ones(size(fives, 1), 1); -1*ones(size(eights, 1), 1) ];
 
 disp('new_classifier:')
-disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) nc(XT, xt, yt)));
+disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) new_classifier_vec(XT, xt, yt)));
 
 disp('sph_bayes:')
-disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) sph(XT, xt, yt)));
+disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) sph_bayes_vec(XT, xt, yt)));
 
 % =============Test misclassification rate using variances =============== %
 
@@ -42,30 +42,7 @@ fivesAndEightsX = [ fives; eights ];
 fivesAndEightsY = [ ones(size(fives, 1), 1); -1*ones(size(eights, 1), 1) ];
 
 disp('new_classifier (variance):')
-disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) nc(XT, xt, yt)));
+disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) new_classifier_vec(XT, xt, yt)));
 
 disp('sph_bayes: (variance)')
-disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) sph(XT, xt, yt)));
-
-% ============================ %
-
-function [ YTest ] = sph(XTest, XTrain, YTrain)
-%sph Helper function to run sph_bayes using vectors
-%   Detailed explanation goes here
-    YTest = zeros(size(XTest, 1), 1);
-    for i=1:size(XTest, 1)
-        [ ~, ~, y] = sph_bayes(XTest(i,:), XTrain, YTrain);
-        YTest(i) = y;
-    end
-end
-
-function [ YTest ] = nc(XTest, XTrain, YTrain)
-
-    [mu1, ~] = muvar(XTrain(YTrain == 1, :));
-    [mu2, ~] = muvar(XTrain(YTrain == -1, :));
-    
-    YTest = zeros(size(XTest, 1), 1);
-    for i=1:size(XTest, 1)
-        YTest(i) = new_classifier(XTest(i,:), mu1, mu2);
-    end
-end
+disp(cross_validate(fivesAndEightsX, fivesAndEightsY, @(XT, xt, yt) sph_bayes_vec(XT, xt, yt)));

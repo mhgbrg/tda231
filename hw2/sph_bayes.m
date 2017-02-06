@@ -9,10 +9,9 @@ function [ P1, P2, Ytest ] = sph_bayes(Xtest, X, y)
     L1 = mvnpdf(Xtest, mu1, sig1);
     L2 = mvnpdf(Xtest, mu2, sig2);
     
+    % Use log-likelihoods to prevent underflow
     P1 = exp(log(L1) - log(L1 + L2));
     P2 = exp(log(L2) - log(L1 + L2));
-    
-    
     
     if P1 > P2
         Ytest = 1;

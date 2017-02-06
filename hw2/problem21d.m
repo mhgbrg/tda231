@@ -4,37 +4,22 @@ data = load('dataset2.mat');
 X = data.x;
 y = data.y;
 
-size(y)
+c1 = X(y == 1,:);
+c2 = X(y == -1,:);
 
-folds = 5;
+fig = figure;
+hold on
+grid on
+scatter3(c1(:,1), c1(:,2), c1(:,3), 'o');
+scatter3(c2(:,1), c2(:,2), c2(:,3), 'x');
 
-K = crossvalind('Kfold',2000,folds);
+title('dataset2');
+legend('1', '-1')
 
-bayesFail = 0;
-newFail = 0;
+saveas(fig, 'problem21d.eps', 'epsc')
 
-for k=1:folds
-    trainX = X(K ~= k,:);
-    trainy = y(K ~= k);
-    testX = X(K == k,:);
-    testy = y(K == k);
+disp('new_classifier:')
+disp(cross_validate(X, y, @(XT, xt, yt) new_classifier_vec(XT, xt, yt)));
 
-    [mu1, ~] = muvar(trainX(trainy == 1,:));
-    [mu2, ~] = muvar(trainX(trainy == -1,:));
-
-    for i=1:size(testX,1)
-        x = testX(i,:);
-        [~, ~, k1] = sph_bayes(x, trainX, trainy);
-        if k1 ~= testy(i)
-            bayesFail = bayesFail + 1;
-        end
-
-        k2 = new_classifier(x, mu1, mu2);
-        if k2 ~= testy(i)
-            newFail = newFail + 1;
-        end
-    end
-end
-
-bayesFail
-newFail
+disp('sph_bayes:')
+disp(cross_validate(X, y, @(XT, xt, yt) sph_bayes_vec(XT, xt, yt)));

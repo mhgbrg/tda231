@@ -1,8 +1,15 @@
 function [ mcr ] = cross_validate(X, Y, classify)
 %CROSS_VALIDATE Summary of this function goes here
-%   Detailed explanation goes here
+%   This function runs 5-fold cross-validation using training data
+%   X and Y, and a function, classify, to produce test results.
+%
+%   crossvalind is used to generate indices for partitioning
+%   the data 5-fold.
+%
+%   mcr is the average misclassification rate after cross-validating
+%   5 times.
+
     folds = 5;
-    
     K = crossvalind('Kfold', size(Y, 1),folds);
 
     fails = 0;
