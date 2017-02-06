@@ -12,6 +12,8 @@ function [ P1, P2, Ytest ] = sph_bayes(Xtest, X, y)
     P1 = exp(log(L1) - log(L1 + L2));
     P2 = exp(log(L2) - log(L1 + L2));
     
+    
+    
     if P1 > P2
         Ytest = 1;
     else

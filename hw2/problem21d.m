@@ -4,6 +4,8 @@ data = load('dataset2.mat');
 X = data.x;
 y = data.y;
 
+size(y)
+
 folds = 5;
 
 K = crossvalind('Kfold',2000,folds);

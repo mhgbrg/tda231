@@ -5,10 +5,9 @@ function [ mcr ] = cross_validate(X, Y, classify)
     
     K = crossvalind('Kfold', size(Y, 1),folds);
 
-    mcr = 0;
+    fails = 0;
+    
     for k=1:folds
-        
-        fails = 0;
         
         XTrain = X(K ~= k,:);
         YTrain = Y(K ~= k);
@@ -21,10 +20,9 @@ function [ mcr ] = cross_validate(X, Y, classify)
                 fails = fails + 1;
             end
         end
-        mcr = mcr + (fails ./ size(result, 1));
     end
     
-    mcr = mcr ./ folds;
+    mcr = fails ./ size(Y, 1);
 
 end
 

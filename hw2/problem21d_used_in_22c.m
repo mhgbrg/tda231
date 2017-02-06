@@ -4,14 +4,16 @@ handwritten = load('digits.mat');
 data = handwritten.data;
 
 fives = transpose(data(:,:,5));
-eights = transpose(data(:,:,5));
+eights = transpose(data(:,:,8));
 
 X = [ fives; eights ];
 y = [ ones(size(fives, 1), 1); -1*ones(size(eights, 1), 1) ];
 
+size(y)
+
 folds = 5;
 
-K = crossvalind('Kfold',2000,folds);
+K = crossvalind('Kfold', size(y, 1), folds);
 
 bayesFail = 0;
 newFail = 0;
