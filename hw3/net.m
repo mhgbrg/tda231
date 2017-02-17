@@ -127,14 +127,110 @@ function res = grad(model, data, wd_coefficient)
   hid_output = logistic(hid_input);
   class_input = model.hid_to_class * hid_output;
   log_class_prob = logsoftmax(class_input);
-  class_prob = exp(log_class_prob); 
+  class_prob = exp(log_class_prob);
   % class_prob is the model output.
   
-  %% TODO - Write code here ---------------
+% # Progression that was used to get to the final result:
+% 
+%     [~, data_points] = size(data.inputs);
+%     [hidden_units, inputs] = size(model.input_to_hid);
+%     [classes, ~] = size(model.hid_to_class);
+%     gradients = zeros(hidden_units, inputs, data_points);
+%     
+% ## Calculating input_to_hid
+%
+% First attempt, using loops for everything.
+%
+%     for i=1:inputs
+%         for j=1:hidden_units
+%             for m=1:data_points
+%                 acc = 0;
+%                 for k=1:classes
+%                     acc = acc + (class_prob(k, m) - data.targets(k, m)) * model.hid_to_class(k, j);
+%                 end
+%                 gradients(j, i, m) = acc * hid_output(j, m) * (1 - hid_output(j, m)) * data.inputs(i, m);
+%             end
+%         end
+%     end
+%
+%     res.input_to_hid = mean(gradients, 3) + wd_coefficient * model.input_to_hid;
+%
+% Second attempt, replacing loop for sum over classes with matrix multiplication.
+%
+%     for i=1:inputs
+%         for j=1:hidden_units
+%             for m=1:data_points
+%                 gradients(j, i, m) = transpose(class_prob(:, m) - data.targets(:, m)) * model.hid_to_class(:, j) * hid_output(j, m) * (1 - hid_output(j, m)) * data.inputs(i, m);
+%             end
+%         end
+%     end
+%
+%     res.input_to_hid = mean(gradients, 3) + wd_coefficient * model.input_to_hid;
+%
+% Third attempt, calculating the gradient matrix for a single data point
+% using matrix operations instead of loops.
+%
+%     for m=1:data_points
+%         dEdyj = transpose(class_prob(:, m) - data.targets(:, m)) * model.hid_to_class;
+%         dyjdzj = transpose(hid_output(:, m) .* (1 - hid_output(:, m)));
+%         dEdzj = dEdyj .* dyjdzj;
+%         gradients(:, :, m) = transpose(dEdzj) * transpose(data.inputs(:, m));
+%     end
+%     
+%     res.input_to_hid = mean(gradients, 3) + wd_coefficient * model.input_to_hid;
+% 
+% ## Calculating hid_to_class
+% 
+% First attempt, using loops for everything.
+%
+%     for j=1:hidden_units
+%         for k=1:classes
+%             % For each weight between the hidden layer and the output
+%             % layer, calculate the gradient for each data point and then
+%             % take the average. How to do this with matrices?
+%             acc = 0;
+%             for m=1:data_points
+%                 acc = acc + (class_prob(k, m) - data.targets(k, m)) * hid_output(j, m);
+%             end
+%             res.hid_to_class(k, j) = acc / data_points;
+%         end
+%     end
+%
+%     res.hid_to_class = mean(gradients, 3) + wd_coefficient * model.hid_to_class;
+% 
+% Second attempt, using a 3d-matrix for the results and taking the mean.
+%
+%     for j=1:hidden_units
+%         for k=1:classes
+%             for m=1:data_points
+%                 gradients(k, j, m) = (class_prob(k, m) - data.targets(k, m)) * hid_output(j, m);
+%             end
+%         end
+%     end
+%
+%     res.hid_to_class = mean(gradients, 3) + wd_coefficient * model.hid_to_class;
+% 
+% Third attempt, calculating the gradient matrix for a single data point
+% using matrix operations instead of loops.
+%
+%     for m=1:data_points
+%         gradients(:, :, m) = (class_prob(:, m) - data.targets(:, m)) * transpose(hid_output(:, m));
+%     end
+%     
+%     res.hid_to_class = mean(gradients, 3) + wd_coefficient * model.hid_to_class;
+    
+    [~, n] = size(data.inputs);
 
-    % Right now the function just returns a lot of zeros. Your job is to change that.
-    res.input_to_hid = model.input_to_hid * 0;
-    res.hid_to_class = model.hid_to_class * 0;
+    E_yj = transpose(model.hid_to_class) * (class_prob - data.targets);
+    yj_zj = hid_output .* (1 - hid_output);
+    E_zj = E_yj .* yj_zj;
+    E_wij = E_zj * transpose(data.inputs) / n;
+    res.input_to_hid = E_wij + wd_coefficient * model.input_to_hid;
+    
+    E_zk = class_prob - data.targets;
+    E_wjk = E_zk * transpose(hid_output) / n;
+    res.hid_to_class = E_wjk + wd_coefficient * model.hid_to_class;
+    
   % ---------------------------------------
 end
 
