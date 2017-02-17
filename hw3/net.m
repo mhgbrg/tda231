@@ -130,6 +130,18 @@ function res = grad(model, data, wd_coefficient)
   class_prob = exp(log_class_prob);
   % class_prob is the model output.
   
+  % Back propagation
+  [~, n] = size(data.inputs);
+
+  E_zk = class_prob - data.targets;
+  E_wjk = E_zk * transpose(hid_output) / n;
+  E_yj = transpose(model.hid_to_class) * E_zk;
+  E_zj = E_yj .* (hid_output .* (1 - hid_output));
+  E_wij = E_zj * transpose(data.inputs) / n;
+  
+  res.input_to_hid = E_wij + wd_coefficient * model.input_to_hid;
+  res.hid_to_class = E_wjk + wd_coefficient * model.hid_to_class;
+  
 % # Progression that was used to get to the final result:
 % 
 %     [~, data_points] = size(data.inputs);
@@ -218,20 +230,7 @@ function res = grad(model, data, wd_coefficient)
 %     end
 %     
 %     res.hid_to_class = mean(gradients, 3) + wd_coefficient * model.hid_to_class;
-    
-    [~, n] = size(data.inputs);
 
-    E_yj = transpose(model.hid_to_class) * (class_prob - data.targets);
-    yj_zj = hid_output .* (1 - hid_output);
-    E_zj = E_yj .* yj_zj;
-    E_wij = E_zj * transpose(data.inputs) / n;
-    res.input_to_hid = E_wij + wd_coefficient * model.input_to_hid;
-    
-    E_zk = class_prob - data.targets;
-    E_wjk = E_zk * transpose(hid_output) / n;
-    res.hid_to_class = E_wjk + wd_coefficient * model.hid_to_class;
-    
-  % ---------------------------------------
 end
 
 %% Activation functions
