@@ -16,7 +16,18 @@ b = [0; 0; 0; 0; 0; 0];
 Aeq = [1 1 1 -1 -1 -1];
 beq = 0;
 
-fmincon(@(a) -fun(a, X, t), [0, 0, 0, 0, 0, 0], A, b, Aeq, beq)
+a = fmincon(@(a) -fun(a, X, t), [2, 2, 2, 2, 2, 2], A, b, Aeq, beq)
+
+w = 0;
+
+for n=1:6
+    w = w + a(n) * t(n) * X(n,:);
+end
+
+b = t(1) - [w1 w2] * transpose(X(1,:));
+
+w
+b
 
 function y = fun(a, X, t)
     [~, N] = size(a);
@@ -28,5 +39,5 @@ function y = fun(a, X, t)
         end
     end
     
-    y = sum(a) - acc;
+    y = sum(a) - 1/2 * acc;
 end
