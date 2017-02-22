@@ -24,7 +24,7 @@ for n=1:6
     w = w + a(n) * t(n) * X(n,:);
 end
 
-b = t(1) - [w1 w2] * transpose(X(1,:));
+b = t(1) - w * transpose(X(1,:));
 
 w
 b
