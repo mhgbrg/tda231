@@ -5,31 +5,25 @@ data = load('d2.mat');
 X = data.X;
 Y = data.Y;
 
-% SVMStruct = svmtrain(X, Y, 'BoxConstraint', 1, 'autoscale', false, 'kernel_function', 'linear', 'method', 'SMO');
-% SVMStruct = svmtrain(X, Y, 'BoxConstraint', 1, 'autoscale', false, 'kernel_function', 'linear', 'method', 'QP');
-% SVMStruct = svmtrain(X, Y, 'BoxConstraint', 1, 'autoscale', false, 'kernel_function', 'quadratic', 'method', 'SMO');
-% SVMStruct = svmtrain(X, Y, 'BoxConstraint', 1, 'autoscale', false, 'kernel_function', 'quadratic', 'method', 'QP');
-% SVMStruct = svmtrain(X, Y, 'BoxConstraint', 1, 'autoscale', false, 'kernel_function', 'rbf', 'method', 'SMO');
-% SVMStruct = svmtrain(X, Y, 'BoxConstraint', 1, 'autoscale', false, 'kernel_function', 'rbf', 'method', 'QP');
+disp('Linear kernel with SMO');
+disp(cross_validate(X, Y, @(XTest, XTrain, YTrain) classify('linear', 'smo', XTest, XTrain, YTrain)));
 
-a = SVMStruct.Alpha;
-s = SVMStruct.SupportVectors;
+disp('Linear kernel with QP');
+disp(cross_validate(X, Y, @(XTest, XTrain, YTrain) classify('linear', 'qp', XTest, XTrain, YTrain)));
 
-w = transpose(s) * a;
-b = SVMStruct.Bias;
+disp('Quadratic kernel with SMO');
+disp(cross_validate(X, Y, @(XTest, XTrain, YTrain) classify('quadratic', 'smo', XTest, XTrain, YTrain)));
 
-X1 = X(Y == 1, :);
-X2 = X(Y == -1, :);
+disp('Quadratic kernel with QP');
+disp(cross_validate(X, Y, @(XTest, XTrain, YTrain) classify('quadratic', 'qp', XTest, XTrain, YTrain)));
 
-Y_prediction = svmclassify(SVMStruct, X);
+disp('RBF kernel with SMO');
+disp(cross_validate(X, Y, @(XTest, XTrain, YTrain) classify('rbf', 'smo', XTest, XTrain, YTrain)));
 
-X_wrong = X(Y ~= Y_prediction, :);
+disp('RBF kernel with QP');
+disp(cross_validate(X, Y, @(XTest, XTrain, YTrain) classify('rbf', 'qp', XTest, XTrain, YTrain)));
 
-figure;
-hold on;
-scatter(X_wrong(:,1), X_wrong(:,2), 150, 'o', 'yellow', 'filled');
-scatter(X1(:,1), X1(:,2), 50, '+', 'red');
-scatter(X2(:,1), X2(:,2), 50, 'x', 'blue');
-scatter(s(:,1), s(:,2), 100, 'o', 'black');
-ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b);
-legend('1', '-1', 'Support vectors', 'Decision boundary');
+function YTest = classify(kernel, method, XTest, XTrain, YTrain)
+    SVMStruct = svmtrain(XTrain, YTrain, 'ShowPlot', true, 'BoxConstraint', 1, 'autoscale', false, 'kernel_function', kernel, 'method', method);
+    YTest = svmclassify(SVMStruct, XTest);
+end
