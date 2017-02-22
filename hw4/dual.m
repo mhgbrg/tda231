@@ -19,10 +19,12 @@ beq = 0;
 fmincon(@(a) -fun(a, X, t), [0, 0, 0, 0, 0, 0], A, b, Aeq, beq)
 
 function y = fun(a, X, t)
+    [~, N] = size(a);
+
     acc = 0;
-    for n=1:6
-        for m=1:6
-            acc = acc + a(n)*a(m)*t(n)*t(m)*X(n)*transpose(X(m));
+    for n=1:N
+        for m=1:N
+            acc = acc + a(n)*a(m)*t(n)*t(m)*X(n,:)*transpose(X(m,:));
         end
     end
     
