@@ -18,10 +18,10 @@ b = [0; 0; 0; 0; 0; 0];
 Aeq = [1 1 1 -1 -1 -1];
 beq = 0;
 
-% Find optimal values for alpha
+% Find optimal alpha values
 a = transpose(fmincon(@(a) -fun(a, X, t), [2, 2, 2, 2, 2, 2], A, b, Aeq, beq))
 
-% Calculate w and b from alpha
+% Calculate w and b using alphas
 w = transpose(X) * (a .* t)
 b = t(1) - X(1,:) * w % We know that the first data point is a support vector, so we can use it to calculate b
 
