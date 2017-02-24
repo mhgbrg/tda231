@@ -1,11 +1,12 @@
 clear;
 
-data = load('d1b.mat');
+data = load('d2.mat');
 
 X = data.X;
 Y = data.Y;
+C = 1;
 
-SVMStruct = svmtrain(X, Y, 'BoxConstraint', 1, 'autoscale', false);
+SVMStruct = svmtrain(X, Y, 'BoxConstraint', C, 'autoscale', false);
 
 a = SVMStruct.Alpha;
 s = SVMStruct.SupportVectors;
@@ -27,6 +28,7 @@ scatter(X1(:,1), X1(:,2), 50, '+', 'red');
 scatter(X2(:,1), X2(:,2), 50, 'x', 'blue');
 scatter(s(:,1), s(:,2), 100, 'o', 'black');
 ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b);
-ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b + 1);
-ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b - 1);
-legend('1', '-1', 'Support vectors', 'Decision boundary');
+% ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b + 1);
+% ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b - 1);
+title(sprintf('C = %d', C));
+legend('Wrongly classified', '1', '-1', 'Support vectors', 'Decision boundary');

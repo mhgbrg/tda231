@@ -1,3 +1,4 @@
+% Data
 X = [2 2;
      4 4;
      4 0;
@@ -6,6 +7,7 @@ X = [2 2;
      0 2];
 t = [1; 1; 1; -1; -1; -1];
 
+% Constraints
 A = [-1  0  0  0  0  0;
       0 -1  0  0  0  0;
       0  0 -1  0  0  0;
@@ -16,19 +18,14 @@ b = [0; 0; 0; 0; 0; 0];
 Aeq = [1 1 1 -1 -1 -1];
 beq = 0;
 
-a = fmincon(@(a) -fun(a, X, t), [2, 2, 2, 2, 2, 2], A, b, Aeq, beq)
+% Find optimal values for alpha
+a = transpose(fmincon(@(a) -fun(a, X, t), [2, 2, 2, 2, 2, 2], A, b, Aeq, beq))
 
-w = 0;
+% Calculate w and b from alpha
+w = transpose(X) * (a .* t)
+b = t(1) - X(1,:) * w % We know that the first data point is a support vector, so we can use it to calculate b
 
-for n=1:6
-    w = w + a(n) * t(n) * X(n,:);
-end
-
-b = t(1) - w * transpose(X(1,:));
-
-w
-b
-
+% Dual function
 function y = fun(a, X, t)
     [~, N] = size(a);
 
