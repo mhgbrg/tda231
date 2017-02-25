@@ -12,13 +12,13 @@ SVMStruct = svmtrain(X, Y, 'BoxConstraint', C, 'autoscale', false);
 
 a = SVMStruct.Alpha;
 s = SVMStruct.SupportVectors;
-b = SVMStruct.Bias
 
 % Calculate w from alphas
-w = transpose(s) * a;
+w = transpose(s) * a
+b = SVMStruct.Bias
 
 % Calculate margin from w
-margin = 1 / mean(w)
+margin = 2 / norm(w)
 
 % Use trained SVM to make predictions
 Y_prediction = svmclassify(SVMStruct, X);
@@ -31,10 +31,10 @@ X_wrong = X(Y ~= Y_prediction, :);
 % Plot
 fig = figure;
 hold on;
-scatter(X_wrong(:,1), X_wrong(:,2), 75, 'o', 'yellow', 'filled');
-scatter(X1(:,1), X1(:,2), 50, '+', 'red');
-scatter(X2(:,1), X2(:,2), 50, 'x', 'blue');
-scatter(s(:,1), s(:,2), 75, 'o', 'black');
+scatter(X_wrong(:,1), X_wrong(:,2), 50, 'o', 'yellow', 'filled');
+scatter(X1(:,1), X1(:,2), '+', 'red');
+scatter(X2(:,1), X2(:,2), 'x', 'blue');
+scatter(s(:,1), s(:,2), 50, 'o', 'black');
 ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b);
 % ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b + 1);
 % ezplot(@(x1, x2) w(1)*x1 + w(2)*x2 + b - 1);
