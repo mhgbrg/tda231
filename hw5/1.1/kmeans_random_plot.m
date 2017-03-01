@@ -1,4 +1,4 @@
-data = load('hw5_p1a.mat');
+data = load('../hw5_p1a.mat');
 X = data.X;
 k = 2;
 
