@@ -10,11 +10,8 @@ C = kmeans(embeds, 10, 'Replicates', 1);
 
 % Calculate N0
 cavalry_class = C(strcmp(vocab, 'cavalry'));
-C1 = vocab(C == cavalry_class);
-C1_size = size(C1, 2);
-
-C1
-C1_size
+C1 = find(C == cavalry_class);
+C1_size = size(C1, 1);
 
 N0 = (C1_size^2 - C1_size) / 2;
 
@@ -23,15 +20,16 @@ C_ = kmeans(embeds, 10, 'Replicates', 1);
 
 % Calculate N1
 N1 = 0;
+
 for i=1:C1_size
     
-    word1 = C1(i);
-    word1_class = C_(strcmp(vocab, word1));
+    word1_index = C1(i);
+    word1_class = C_(word1_index);
     
-    for j=i:C1_size
+    for j=(i+1):C1_size
         
-        word2 = C1(j);
-        word2_class = C_(strcmp(vocab, word2));
+        word2_index = C1(j);
+        word2_class = C_(word2_index);
         
         if word1_class == word2_class
             N1 = N1 + 1;
@@ -41,6 +39,6 @@ for i=1:C1_size
     
 end
 
-f = N1 / N0;
-
-disp(f);
+N0
+N1
+f = N1 / N0
