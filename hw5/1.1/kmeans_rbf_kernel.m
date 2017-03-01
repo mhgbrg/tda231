@@ -1,4 +1,4 @@
-function [ y, after1 ] = kmeans_rbf_kernel(X, k, sig)
+function y = kmeans_rbf_kernel(X, k, sig)
 %KMEANS_RANDOM Summary of this function goes here
 %   Detailed explanation goes here
 N = size(X, 1);
@@ -6,8 +6,6 @@ rbf = @(x1, x2) exp(-norm(x1 - x2)^2 / (2 * sig^2));
 
 y = zeros(N, 1);
 y_new = randi(k,N,1);
-
-after1 = y_new;
 
 while ~isequal(y, y_new)
     
@@ -22,7 +20,7 @@ while ~isequal(y, y_new)
                 term3(c) = term3(c) + rbf(Xk(m,:), Xk(l,:));
             end
         end
-        term3(c) = term3(c) / Nk;
+        term3(c) = term3(c) / Nk^2;
     end
 
     for n=1:N
