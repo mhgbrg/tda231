@@ -18,9 +18,11 @@ C = kmeans(X, k);
 
 markers = ['o', '+', '*', 'x', 's', 'd', '^', 'v', 'p', 'h'];
 
-figure;
+fig = figure;
 hold on;
 for i=1:k
     X_i = X_(C == i, :);
     scatter(X_i(:,1), X_i(:,2), markers(i));
 end
+
+saveas(fig, '../figures/problem12d.eps', 'epsc');
