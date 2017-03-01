@@ -35,4 +35,3 @@ while ~isequal(mu, mu_new)
 end
 
 end
-
