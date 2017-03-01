@@ -15,7 +15,7 @@ term2 = 2/N * term2;
 term3 = 0;
 for m=1:N
     for l=1:N
-        term3 = term3 + kernel(Xk(m), Xk(l));
+        term3 = term3 + kernel(Xk(m,:), Xk(l,:));
     end
 end
 term3 = 1/N^2 * term3;
