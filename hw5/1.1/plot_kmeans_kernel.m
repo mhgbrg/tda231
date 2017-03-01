@@ -1,7 +1,7 @@
 data = load('../hw5_p1b.mat');
 X = data.X;
 k = 2;
-sig = 3.5;
+sig = .2;
 
 [ y, after1 ] = kmeans_rbf_kernel(X, k, sig);
 X1 = X(y == 1,:);
