@@ -1,4 +1,7 @@
 function Y = kmeans_kernel(X, k, kernel, max_iterations)
+% Performs the kernalized version of k-means on the data X.
+% Returns a cell array with the labels for the data after each iteration.
+
     if ~exist('max_iterations', 'var')
         max_iterations = 100;
     end
@@ -59,5 +62,9 @@ function Y = kmeans_kernel(X, k, kernel, max_iterations)
         
         % Save the new assignments.
         Y{i} = y_new;
+        
+        if i == max_iterations
+            warning('Failed to converge in %i iterations', max_iterations);
+        end
     end
 end
