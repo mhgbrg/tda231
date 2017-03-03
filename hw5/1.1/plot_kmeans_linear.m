@@ -2,7 +2,7 @@ data = load('hw5_p1a.mat');
 X = data.X;
 k = 2;
 
-Y = kmeans_random(X, k);
+Y = kmeans_linear(X, k);
 
 y_2 = Y{2};
 y_final = Y{end};

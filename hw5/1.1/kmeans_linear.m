@@ -1,4 +1,4 @@
-function Y = kmeans_random(X, K, max_iterations)
+function Y = kmeans_linear(X, K, max_iterations)
     if ~exist('max_iterations', 'var')
         max_iterations = 100;
     end
