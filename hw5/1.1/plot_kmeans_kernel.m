@@ -5,7 +5,12 @@ X = data.X;
 k = 2;
 sig = .2;
 
-y = kmeans_rbf_kernel(X, k, sig);
+rbf = @(x1, x2) exp(-norm(x1 - x2)^2 / (2 * sig^2));
+
+Y = kmeans_kernel(X, k, rbf);
+
+y = Y{end};
+
 X1 = X(y == 1,:);
 X2 = X(y == 2,:);
 

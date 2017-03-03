@@ -3,6 +3,8 @@ function Y = kmeans_linear(X, K, max_iterations)
         max_iterations = 100;
     end
     
+    N = size(X, 1);
+    
     % Initiate centers to K data points chosen uniformly at random.
     mu = datasample(X, K, 'Replace', false);
     
@@ -10,7 +12,6 @@ function Y = kmeans_linear(X, K, max_iterations)
     % every iteration. The unused elements are removed when the loop ends.
     Y = cell(max_iterations, 1);
     
-    N = size(X, 1);
     for i=1:max_iterations
         y = zeros(N, 1);
         
