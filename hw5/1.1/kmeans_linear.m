@@ -1,4 +1,7 @@
 function Y = kmeans_linear(X, K, max_iterations)
+% Performs k-means on the data X.
+% Returns a cell array with the labels for the data after each iteration.
+
     if ~exist('max_iterations', 'var')
         max_iterations = 100;
     end
