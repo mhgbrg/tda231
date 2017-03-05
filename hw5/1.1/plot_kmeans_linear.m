@@ -1,4 +1,5 @@
 clear;
+addpath('../helpers');
 
 data = load('hw5_p1a.mat');
 X = data.X;
