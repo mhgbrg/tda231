@@ -6,9 +6,9 @@ embeds = data.wordembeddings;
 
 runs = 10;
 
-f = 0;
+f = zeros(runs, 1);
 
-for p=1:runs
+for r=1:runs
     % Run kmeans
     C = kmeans(embeds, 10, 'Replicates', 1);
 
@@ -38,9 +38,11 @@ for p=1:runs
         end
     end
 
-    % Calculate accumulative f
-    f = f + N1 / N0;
+    % Calculate f
+    f(r) = N1 / N0;
 end
 
 % Average f over all runs
-f = f / runs
+min = min(f)
+max = max(f)
+mean = mean(f)
