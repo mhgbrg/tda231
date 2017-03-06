@@ -22,4 +22,4 @@ X_ = tsne(X);
 fig = figure;
 scatter_clusters(X_, y, K, '');
 
-saveas(fig, '../figures/problem12d.eps', 'epsc');
+% saveas(fig, '../figures/problem12d.eps', 'epsc');

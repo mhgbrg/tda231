@@ -43,6 +43,6 @@ for r=1:runs
 end
 
 % Average f over all runs
-min = min(f)
-max = max(f)
 mean = mean(f)
+% min = min(f)
+% max = max(f)

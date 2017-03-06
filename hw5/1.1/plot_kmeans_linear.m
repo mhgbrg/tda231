@@ -15,7 +15,8 @@ fig = figure;
 scatter_clusters(X, y_final, K, '');
 scatter(X_diff(:,1), X_diff(:,2), 50, 'ko');
 
-fig_iterations = scatter_iterations(X, Y, K);
+% Plots all iterations of the k-means algorithm
+% fig_iterations = scatter_iterations(X, Y, K);
 
-saveas(fig, '../figures/problem11b.eps', 'epsc');
-saveas(fig_iterations, '../figures/problem11b_iterations.eps', 'epsc');
+% saveas(fig, '../figures/problem11b.eps', 'epsc');
+% saveas(fig_iterations, '../figures/problem11b_iterations.eps', 'epsc');

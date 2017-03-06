@@ -19,8 +19,9 @@ scatter_clusters(X, y_linear, K, 'Linear');
 fig_kernel = figure;
 scatter_clusters(X, y_kernel, K, 'Kernel');
 
-fig_iterations = scatter_iterations(X, Y_kernel, K);
+% Plots all iterations of the k-means algorithm
+% fig_iterations = scatter_iterations(X, Y_kernel, K);
 
-saveas(fig_linear, '../figures/problem11d_linear.eps', 'epsc');
-saveas(fig_kernel, '../figures/problem11d_kernel.eps', 'epsc');
-saveas(fig_iterations, '../figures/problem11d_iterations.eps', 'epsc');
+% saveas(fig_linear, '../figures/problem11d_linear.eps', 'epsc');
+% saveas(fig_kernel, '../figures/problem11d_kernel.eps', 'epsc');
+% saveas(fig_iterations, '../figures/problem11d_iterations.eps', 'epsc');
